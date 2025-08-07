@@ -29,6 +29,15 @@ const Login = () => {
     }
   };
 
+  const handleGoogleLogin = async () => {
+    try {
+      await loginWithGoogle();
+      navigate("/");
+    } catch (err) {
+      alert("Google login failed: " + err.message);
+    }
+  };
+
   return (
     <Container maxWidth="xs" sx={{ mt: 8 }}>
       <Paper elevation={4} sx={{ p: 4 }}>
@@ -64,7 +73,7 @@ const Login = () => {
             <Divider>or</Divider>
 
             <Button
-              onClick={loginWithGoogle}
+              onClick={handleGoogleLogin}
               variant="outlined"
               startIcon={<GoogleIcon />}
               fullWidth
@@ -74,7 +83,10 @@ const Login = () => {
 
             <Typography variant="body2" align="center">
               Don't have an account?{" "}
-              <Link to="/signup" style={{ textDecoration: "none", color: "#1976d2" }}>
+              <Link
+                to="/signup"
+                style={{ textDecoration: "none", color: "#1976d2" }}
+              >
                 Sign up
               </Link>
             </Typography>
