@@ -5,6 +5,7 @@ import {
   signOut,
   signInWithPopup,
   signInWithEmailAndPassword,
+  createUserWithEmailAndPassword,
 } from "firebase/auth";
 import { auth, provider } from "../firebase/config";
 
@@ -23,6 +24,10 @@ export const AuthProvider = ({ children }) => {
     return unsubscribe;
   }, []);
 
+  // ✅ Add this
+  const signup = (email, password) =>
+    createUserWithEmailAndPassword(auth, email, password);
+
   const login = (email, password) =>
     signInWithEmailAndPassword(auth, email, password);
 
@@ -31,7 +36,9 @@ export const AuthProvider = ({ children }) => {
   const logout = () => signOut(auth);
 
   return (
-    <AuthContext.Provider value={{ user, login, loginWithGoogle, logout }}>
+    <AuthContext.Provider
+      value={{ user, signup, login, loginWithGoogle, logout }}
+    >
       {!loading && children}
     </AuthContext.Provider>
   );
